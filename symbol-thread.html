@@ -53,24 +53,27 @@
     }
 
     .thread-box {
-      background: #fff;
-      border: 1px solid #bcc6d0;
-      margin-bottom: 14px;
-    }
+  background: #fff;
+  border: 1px solid #bcc6d0;
+  margin-bottom: 14px;
+  transition: background 0.08s linear, border-color 0.08s linear, filter 0.08s linear;
+}
 
     .thread-title {
-      background: linear-gradient(#edf2f7, #dbe5ef);
-      border-bottom: 1px solid #bcc6d0;
-      padding: 10px 12px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #21384d;
-    }
+  background: linear-gradient(#edf2f7, #dbe5ef);
+  border-bottom: 1px solid #bcc6d0;
+  padding: 10px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #21384d;
+  transition: background 0.08s linear, color 0.08s linear, border-color 0.08s linear;
+}
 
     .post {
-      padding: 14px;
-      border-top: 1px solid #e2e6ea;
-    }
+  padding: 14px;
+  border-top: 1px solid #e2e6ea;
+  transition: border-color 0.08s linear, background 0.08s linear;
+}
 
     .post-user {
       font-weight: bold;
@@ -156,54 +159,29 @@
   mix-blend-mode: screen;
   transition: opacity 0.08s linear;
 }
-    .roots-overlay {
+
+.roots-bottom {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 55vh;
+  height: 45vh;
   pointer-events: none;
   z-index: 23;
   opacity: 0;
-  background:
-    linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0) 100%),
-    repeating-linear-gradient(
-      78deg,
-      transparent 0px,
-      transparent 24px,
-      rgba(0,0,0,0.95) 25px,
-      rgba(0,0,0,0.95) 28px,
-      transparent 29px,
-      transparent 60px
-    ),
-    repeating-linear-gradient(
-      102deg,
-      transparent 0px,
-      transparent 20px,
-      rgba(0,0,0,0.88) 21px,
-      rgba(0,0,0,0.88) 24px,
-      transparent 25px,
-      transparent 56px
-    ),
-    repeating-linear-gradient(
-      88deg,
-      transparent 0px,
-      transparent 46px,
-      rgba(0,0,0,0.75) 47px,
-      rgba(0,0,0,0.75) 49px,
-      transparent 50px,
-      transparent 92px
-    );
-  filter: blur(1.5px);
+  background-image: url('roots-bottom.png');
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 100% 100%;
   transition: opacity 0.08s linear;
-}
+}    
   </style>
 </head>
 <body>
   <div class="dark-overlay" id="darkOverlay"></div>
 <div class="vignette" id="vignette"></div>
 <div class="noise-overlay" id="noiseOverlay"></div>
-  <div class="roots-overlay" id="rootsOverlay"></div>
+<div class="roots-bottom" id="rootsBottom"></div>
 
   <div class="topbar">
     <a href="index.html">Home</a>
@@ -366,7 +344,10 @@
   const darkOverlay = document.getElementById("darkOverlay");
   const vignette = document.getElementById("vignette");
   const noiseOverlay = document.getElementById("noiseOverlay");
-  const rootsOverlay = document.getElementById("rootsOverlay");
+  const rootsBottom = document.getElementById("rootsBottom");
+  const threadBox = document.querySelector(".thread-box");
+const threadTitle = document.querySelector(".thread-title");
+const posts = document.querySelectorAll(".post");
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
@@ -382,11 +363,31 @@
     darkOverlay.style.opacity = progress * 1;
     vignette.style.opacity = progress * 1;
     noiseOverlay.style.opacity = progress * 0.35;
-    rootsOverlay.style.opacity = Math.max(0, (progress - 0.45) / 0.55) * 0.95;
+    rootsBottom.style.opacity = Math.max(0, (progress - 0.45) / 0.55) * 0.95;
 
     document.body.style.backgroundColor = `rgb(${223 - progress * 223}, ${227 - progress * 227}, ${232 - progress * 232})`;
-document.body.style.filter = `contrast(${1 + progress * 0.95}) brightness(${1 - progress * 0.18})`;
+document.body.style.filter = `contrast(${1 + progress * 1.05}) brightness(${1 - progress * 0.22})`;
 noiseOverlay.style.opacity = progress * 0.35;
+
+// затемнение самого треда
+const boxShade = Math.round(255 - progress * 255);
+const borderShade = Math.round(188 - progress * 188);
+const titleShadeTop = Math.round(237 - progress * 237);
+const titleShadeBottom = Math.round(219 - progress * 219);
+const textShade = Math.round(17 + progress * 230);
+
+threadBox.style.background = `rgb(${boxShade}, ${boxShade}, ${boxShade})`;
+threadBox.style.borderColor = `rgb(${borderShade}, ${borderShade}, ${borderShade})`;
+threadBox.style.filter = `contrast(${1 + progress * 0.4})`;
+
+threadTitle.style.background = `linear-gradient(rgb(${titleShadeTop}, ${titleShadeTop}, ${titleShadeTop}), rgb(${titleShadeBottom}, ${titleShadeBottom}, ${titleShadeBottom}))`;
+threadTitle.style.color = `rgb(${textShade}, ${textShade}, ${textShade})`;
+threadTitle.style.borderColor = `rgb(${borderShade}, ${borderShade}, ${borderShade})`;
+
+posts.forEach(post => {
+  post.style.borderColor = `rgba(${borderShade}, ${borderShade}, ${borderShade}, 0.9)`;
+  post.style.background = `rgba(0,0,0,${progress * 0.18})`;
+});
   }
 
   window.addEventListener("scroll", updateScrollEffect);
