@@ -391,15 +391,13 @@ threadTitle.style.borderColor = `rgb(${borderShade}, ${borderShade}, ${borderSha
 posts.forEach(post => {
   post.style.borderColor = `rgba(${borderShade}, ${borderShade}, ${borderShade}, 0.9)`;
   post.style.background = `rgba(0,0,0,${progress * 0.18})`;
-  postUsers.forEach(user => {
-  const blue = Math.round(26 - progress * 26);
-  const green = Math.round(79 - progress * 79);
-  const red = Math.round(163 - progress * 163);
-  user.style.color = `rgb(${red}, ${green}, ${blue})`;
+postUsers.forEach(user => {
+  const shade = Math.round(26 + progress * 210);
+  user.style.color = `rgb(${shade}, ${shade}, ${shade})`;
 });
 
 postMetas.forEach(meta => {
-  const shade = Math.round(102 - progress * 102);
+  const shade = Math.round(102 + progress * 120);
   meta.style.color = `rgb(${shade}, ${shade}, ${shade})`;
 });
 
@@ -409,10 +407,9 @@ postTexts.forEach(text => {
 });
 
 links.forEach(link => {
-  const blue = Math.round(26 - progress * 26);
-  const green = Math.round(79 - progress * 79);
-  const red = Math.round(163 - progress * 163);
-  link.style.color = `rgb(${red}, ${green}, ${blue})`;
+  const shade = Math.round(26 + progress * 210);
+  link.style.color = `rgb(${shade}, ${shade}, ${shade})`;
+});
 });
 });
   }
