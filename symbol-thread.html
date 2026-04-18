@@ -392,24 +392,23 @@ posts.forEach(post => {
   post.style.borderColor = `rgba(${borderShade}, ${borderShade}, ${borderShade}, 0.9)`;
   post.style.background = `rgba(0,0,0,${progress * 0.18})`;
 postUsers.forEach(user => {
-  const shade = Math.round(26 + progress * 210);
+  const shade = Math.round(26 - progress * 26);
   user.style.color = `rgb(${shade}, ${shade}, ${shade})`;
 });
 
 postMetas.forEach(meta => {
-  const shade = Math.round(102 + progress * 120);
+  const shade = Math.round(102 - progress * 102);
   meta.style.color = `rgb(${shade}, ${shade}, ${shade})`;
 });
 
 postTexts.forEach(text => {
-  const shade = Math.round(17 + progress * 220);
+  const shade = Math.round(17 - progress * 17);
   text.style.color = `rgb(${shade}, ${shade}, ${shade})`;
 });
 
 links.forEach(link => {
-  const shade = Math.round(26 + progress * 210);
+  const shade = Math.round(26 - progress * 26);
   link.style.color = `rgb(${shade}, ${shade}, ${shade})`;
-});
 });
 });
   }
