@@ -172,7 +172,7 @@
   background-image: url('roots-bottom.png');
   background-repeat: no-repeat;
   background-position: bottom center;
-  background-size: 100% 100%;
+  background-size: cover;
   transition: opacity 0.08s linear;
 }    
   </style>
@@ -346,8 +346,12 @@
   const noiseOverlay = document.getElementById("noiseOverlay");
   const rootsBottom = document.getElementById("rootsBottom");
   const threadBox = document.querySelector(".thread-box");
-const threadTitle = document.querySelector(".thread-title");
-const posts = document.querySelectorAll(".post");
+  const threadTitle = document.querySelector(".thread-title");
+  const posts = document.querySelectorAll(".post");
+  const postUsers = document.querySelectorAll(".post-user");
+  const postMetas = document.querySelectorAll(".post-meta");
+  const links = document.querySelectorAll("a");
+  const postTexts = document.querySelectorAll(".post-text");
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
@@ -387,6 +391,29 @@ threadTitle.style.borderColor = `rgb(${borderShade}, ${borderShade}, ${borderSha
 posts.forEach(post => {
   post.style.borderColor = `rgba(${borderShade}, ${borderShade}, ${borderShade}, 0.9)`;
   post.style.background = `rgba(0,0,0,${progress * 0.18})`;
+  postUsers.forEach(user => {
+  const blue = Math.round(26 - progress * 26);
+  const green = Math.round(79 - progress * 79);
+  const red = Math.round(163 - progress * 163);
+  user.style.color = `rgb(${red}, ${green}, ${blue})`;
+});
+
+postMetas.forEach(meta => {
+  const shade = Math.round(102 - progress * 102);
+  meta.style.color = `rgb(${shade}, ${shade}, ${shade})`;
+});
+
+postTexts.forEach(text => {
+  const shade = Math.round(17 + progress * 220);
+  text.style.color = `rgb(${shade}, ${shade}, ${shade})`;
+});
+
+links.forEach(link => {
+  const blue = Math.round(26 - progress * 26);
+  const green = Math.round(79 - progress * 79);
+  const red = Math.round(163 - progress * 163);
+  link.style.color = `rgb(${red}, ${green}, ${blue})`;
+});
 });
   }
 
